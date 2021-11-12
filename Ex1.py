@@ -1,4 +1,5 @@
 import json
+import csv
 
 
 # Building class to hold building parameters and our elevators
@@ -37,3 +38,23 @@ class Elevator:
     @classmethod
     def construct(cls, data):
         return cls(**data)
+
+
+class Calls:
+
+    # ph1/ph2 = placeholder
+    def __init__(self, _id: str, _time: float, _src: int, _dest: int, _ph1: int, _ph2: int):
+        self.id = _id
+        self.time = _time
+        self.src = _src
+        self.dest = _dest
+        self.ph1 = _ph1
+        self.ph2 = _ph2
+
+    # TODO : Need to fix this
+    @classmethod
+    def init_data(cls, f_loc2: str):
+        with open(f_loc2, "rt") as f:
+            data = csv.reader(f)
+            for row in data:
+                Calls.__init__()
