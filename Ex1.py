@@ -12,10 +12,10 @@ class Building:
     @classmethod
     def init_data(cls, f_loc1: str):
         with open(f_loc1, "r") as data:
-            objectData = json.load(data)
-            min_floor = objectData["_minFloor"]
-            max_floor = objectData["_maxFloor"]
-            elevators = [Elevator.construct(_elevator) for _elevator in objectData["_elevators"]]
+            object_data = json.load(data)
+            min_floor = object_data["_minFloor"]
+            max_floor = object_data["_maxFloor"]
+            elevators = [Elevator.construct(_elevator) for _elevator in object_data["_elevators"]]
         return cls(elevators, min_floor, max_floor)
 
 
@@ -33,6 +33,7 @@ class Elevator:
         self.startTime = _startTime
         self.stopTime = _stopTime
 
+    # Helper function to create the Elevator object while in the loop of reading the JSON file parameters
     @classmethod
     def construct(cls, data):
         return cls(**data)
