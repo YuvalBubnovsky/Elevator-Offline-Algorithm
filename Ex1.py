@@ -12,12 +12,15 @@ class Building:
 
     @classmethod
     def init_data(cls, f_loc1: str):
-        with open(f_loc1, "r") as data:
-            object_data = json.load(data)
-            min_floor = object_data["_minFloor"]
-            max_floor = object_data["_maxFloor"]
-            elevators = [Elevator.construct(_elevator) for _elevator in object_data["_elevators"]]
-        return cls(elevators, min_floor, max_floor)
+        try:
+            with open(f_loc1, "r") as data:
+                object_data = json.load(data)
+                min_floor = object_data["_minFloor"]
+                max_floor = object_data["_maxFloor"]
+                elevators = [Elevator.construct(_elevator) for _elevator in object_data["_elevators"]]
+            return cls(elevators, min_floor, max_floor)
+        except FileExistsError as e:
+            print(e)
 
 
 # Elevator class, initialization from JSON file
@@ -40,7 +43,8 @@ class Elevator:
         return cls(**data)
 
 
-class Calls:
+class Call:
+    # calls_list = [] # static variable,list of calls. instance of Calls.
 
     # ph1/ph2 = placeholder
     def __init__(self, _id: str, _time: float, _src: int, _dest: int, _ph1: int, _ph2: int):
@@ -51,10 +55,41 @@ class Calls:
         self.ph1 = _ph1
         self.ph2 = _ph2
 
-    # TODO : Need to fix this
+    # # TODO : Need to fix this
+    # @classmethod
+    # def init_data(self, f_loc2: str):
+    #     calls_list_temp = [] # Create a list which will hold all the calls in the CSV files
+    #     try:
+    #         with open(f_loc2, "rt") as f:
+    #             calls = csv.reader(f)
+    #             for each_call in calls:
+    #                 call = Call(*each_call)
+    #                 calls_list_temp.append(call)
+    #         self.calls_list = Calls(calls_list_temp)
+    #         return
+    #     except FileExistsError as e:
+    #         print(e)
+
+
+class Calls:
+    """List of calls"""
+
+    def __init__(self, _calls_list: list):
+        self.calls_list = _calls_list
+
     @classmethod
     def init_data(cls, f_loc2: str):
-        with open(f_loc2, "rt") as f:
-            data = csv.reader(f)
-            for row in data:
-                Calls.__init__()
+        calls_list = []  # Create a list which will hold all the calls in the CSV files
+        try:
+            with open(f_loc2, "rt") as f:
+                calls = csv.reader(f)
+                for each_call in calls:
+                    call_vars = ",".join(each_call)
+                    call = Call(call_vars)  # creating call
+                    calls_list.append(call)
+            return cls(calls_list)
+        except FileExistsError as e:
+            print(e)
+
+
+
