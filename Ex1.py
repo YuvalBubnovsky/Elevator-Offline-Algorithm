@@ -40,21 +40,23 @@ class Elevator:
         return cls(**data)
 
 
-class Calls:
+class Call:
 
-    # ph1/ph2 = placeholder
-    def __init__(self, _id: str, _time: float, _src: int, _dest: int, _ph1: int, _ph2: int):
+    # ph1 = placeholder
+    # 'who' states which elevator is allocated to the call
+    def __init__(self, _id: str, _time: float, _src: int, _dest: int, _ph1: int, _who: int):
         self.id = _id
         self.time = _time
         self.src = _src
         self.dest = _dest
         self.ph1 = _ph1
-        self.ph2 = _ph2
+        self.who = _who
 
     # TODO : Need to fix this
     @classmethod
     def init_data(cls, f_loc2: str):
+        call_list = []  # Create a list which will hold all the calls in the CSV files
         with open(f_loc2, "rt") as f:
             data = csv.reader(f)
             for row in data:
-                Calls.__init__()
+                call_list.append(Call(row[0], float(row[1]), int(row[2]), int(row[3]), int(row[4]), int(row[5])))
