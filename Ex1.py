@@ -52,7 +52,6 @@ class Call:
         self.ph1 = _ph1
         self.who = _who
 
-    # TODO : Need to fix this
     @classmethod
     def init_data(cls, f_loc2: str):
         call_list = []  # Create a list which will hold all the calls in the CSV files
@@ -60,3 +59,4 @@ class Call:
             data = csv.reader(f)
             for row in data:
                 call_list.append(Call(row[0], float(row[1]), int(row[2]), int(row[3]), int(row[4]), int(row[5])))
+
