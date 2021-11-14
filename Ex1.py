@@ -22,6 +22,15 @@ class Building:
         except FileExistsError as e:
             print(e)
 
+    def get_min_floor(self):
+        return self.minFloor
+
+    def get_max_floor(self):
+        return self.maxFloor
+
+    def get_elevators(self):
+        return self.elevators
+
 
 # Elevator class, initialization from JSON file
 class Elevator:
@@ -41,6 +50,30 @@ class Elevator:
     @classmethod
     def construct(cls, data):
         return cls(**data)
+
+    def get_id(self):
+        return self.id
+
+    def get_speed(self):
+        return self.speed
+
+    def get_min_floor(self):
+        return self.minFloor
+
+    def get_max_floor(self):
+        return self.maxFloor
+
+    def get_close_time(self):
+        return self.closeTime
+
+    def get_open_time(self):
+        return self.openTime
+
+    def get_start_time(self):
+        return self.startTime
+
+    def get_stop_time(self):
+        return self.stopTime
 
 
 class Call:
@@ -70,6 +103,24 @@ class Call:
     #     except FileExistsError as e:
     #         print(e)
 
+    def get_id(self):
+        return self.id
+
+    def get_time(self):
+        return self.time
+
+    def get_src(self):
+        return self.src
+
+    def get_dest(self):
+        return self.dest
+
+    def get_ph1(self):
+        return self.ph1
+
+    def get_ph2(self):
+        return self.ph2
+
 
 class Calls:
     """List of calls"""
@@ -85,11 +136,36 @@ class Calls:
                 calls = csv.reader(f)
                 for each_call in calls:
                     call_vars = ",".join(each_call)
-                    call = Call(call_vars)  # creating call
+                    call = Call(call_vars[0], float(call_vars[1]), int(call_vars[2]), int(call_vars[3]),
+                                int(call_vars[4]), int(call_vars[5]))  # creating call
                     calls_list.append(call)
             return cls(calls_list)
         except FileExistsError as e:
             print(e)
 
 
-
+# class CallNode:
+#
+#     # constructor
+#     def __init__(self, data: Call, next_call: Call = None):
+#         self.data = data
+#         if next_call is None:
+#             self.next_call = None
+#         else:
+#             self.next_call = next_call
+#
+#     @classmethod
+#     def not_none_next(cls, data: Call, next_node: Call):
+#         return cls(data, next_node)
+#
+#     def get_data(self):
+#         return self.data
+#
+#     def set_data(self, new_data):
+#         self.data = new_data
+#
+#     def get_next(self):
+#         return self.next_node
+#
+#     def set_next(self, new_next: Call):
+#         self.next_node = new_next
