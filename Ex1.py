@@ -54,6 +54,7 @@ class Elevator:
     def get_id(self):
         return self.id
 
+     
     def get_speed(self):
         return self.speed
 
@@ -82,6 +83,13 @@ class Call:
     # ph1/ph2 = placeholder
     def __init__(self, _id: str, _time: float, _src: int, _dest: int, _ph1: int, _ph2: int
                  , direction: int):
+
+class Call:
+
+    # ph1 = placeholder
+    # 'who' states which elevator is allocated to the call
+    def __init__(self, _id: str, _time: float, _src: int, _dest: int, _ph1: int, _who: int):
+
         self.id = _id
         self.time = _time
         self.src = _src
@@ -133,6 +141,8 @@ class Calls:
     def __init__(self, _calls_list: list):
         self.calls_list = _calls_list
 
+        self.who = _who
+
     @classmethod
     def init_data(cls, f_loc2: str):
         calls_list = []  # Create a list which will hold all the calls in the CSV files
@@ -181,3 +191,10 @@ def sort_calls_list_d(calls_list: list):
 #
 #     def set_next(self, new_next: Call):
 #         self.next_node = new_next
+
+        call_list = []  # Create a list which will hold all the calls in the CSV files
+        with open(f_loc2, "rt") as f:
+            data = csv.reader(f)
+            for row in data:
+                call_list.append(Call(row[0], float(row[1]), int(row[2]), int(row[3]), int(row[4]), int(row[5])))
+
