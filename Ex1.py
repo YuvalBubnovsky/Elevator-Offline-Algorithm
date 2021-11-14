@@ -54,7 +54,6 @@ class Elevator:
     def get_id(self):
         return self.id
 
-     
     def get_speed(self):
         return self.speed
 
@@ -84,18 +83,13 @@ class Call:
     def __init__(self, _id: str, _time: float, _src: int, _dest: int, _ph1: int, _ph2: int
                  , direction: int):
 
-class Call:
-
-    # ph1 = placeholder
-    # 'who' states which elevator is allocated to the call
-    def __init__(self, _id: str, _time: float, _src: int, _dest: int, _ph1: int, _who: int):
-
         self.id = _id
         self.time = _time
         self.src = _src
         self.dest = _dest
         self.ph1 = _ph1
         self.ph2 = _ph2
+        self.direction = 0
         if self.src < self.dest:
             self.direction = 1 #UP
         else:
