@@ -80,13 +80,18 @@ class Call:
     # calls_list = [] # static variable,list of calls. instance of Calls.
 
     # ph1/ph2 = placeholder
-    def __init__(self, _id: str, _time: float, _src: int, _dest: int, _ph1: int, _ph2: int):
+    def __init__(self, _id: str, _time: float, _src: int, _dest: int, _ph1: int, _ph2: int
+                 , direction: int):
         self.id = _id
         self.time = _time
         self.src = _src
         self.dest = _dest
         self.ph1 = _ph1
         self.ph2 = _ph2
+        if self.src < self.dest:
+            self.direction = 1 #UP
+        else:
+            self.direction = -1 #DOWN
 
     # # TODO : Need to fix this
     # @classmethod
@@ -143,6 +148,13 @@ class Calls:
         except FileExistsError as e:
             print(e)
 
+
+def sort_calls_list_a(calls_list: list):
+    calls_list.sort(key=lambda x: x.time)
+
+
+def sort_calls_list_d(calls_list: list):
+    calls_list.sort(key=lambda x: x.time, reverse=True)
 
 # class CallNode:
 #
