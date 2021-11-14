@@ -47,7 +47,6 @@ While researching for this assignment, we used the following resources to unders
 * [A video showcasing the elevator problem with possible solutions][youtube]
 * [Github Scala project implementing a FCFS approach to the elevator problem][github]
 
-
 [paper]: https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.62.1185&rep=rep1&type=pdf
 [wiki]: https://en.wikipedia.org/wiki/Elevator_algorithm
 [youtube]: https://www.youtube.com/watch?v=xOayymoIl8U
