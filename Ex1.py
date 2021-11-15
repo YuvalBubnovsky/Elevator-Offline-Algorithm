@@ -16,7 +16,7 @@ def allocate(f_loc3: str, calls, elevators: list):
     # TO-DO assign all calls to elevator 1
     for call in calls:
         call.ph1 = 0
-    write_csv("results.txt", calls)
+    write_csv(f_loc3, calls)
 
 
 # else:

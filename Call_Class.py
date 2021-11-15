@@ -27,9 +27,7 @@ class Call:
             with open(f_loc2, "rt") as f:
                 calls = csv.reader(f)
                 for each_call in calls:
-                    call_vars = ",".join(each_call)
-                    call = Call(call_vars[0], float(call_vars[1]), int(call_vars[2]), int(call_vars[3]),
-                                int(call_vars[4]), int(call_vars[5]), 0)  # creating call
+                    call = Call(each_call[0], float(each_call[1]), int(each_call[2]), int(each_call[3]), int(each_call[4]), int(each_call[5]), 0)  # creating call
                     calls_list.append(call)
             return calls_list
         except FileExistsError as e:
