@@ -5,18 +5,19 @@ import Call_Class
 import csv
 
 
-def init(argv):
+def init():
     building = Building_Class.Building.init_data(sys.argv[1])
     call_list = Call_Class.Call.init_data(sys.argv[2])
     allocate(sys.argv[3], call_list, building.elevators)
 
 
 def allocate(f_loc3: str, calls: list, elevators: list):
-    # if len(elevators) == 1:
-    # TO-DO assign all calls to elevator 1
-    for call in calls:
-        call.who = 0
-    write_csv(f_loc3, calls)
+    if len(elevators) == 1:
+        for call in calls:
+            call.who = 0
+        write_csv(f_loc3, calls)
+    else:
+        pass
 
 
 # else:
@@ -41,4 +42,4 @@ def write_csv(file: str, calls: list):
 
 
 if __name__ == "__main__":
-    init(sys.argv[0:])
+    init()

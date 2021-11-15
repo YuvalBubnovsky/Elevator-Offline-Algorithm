@@ -42,8 +42,8 @@ class Call:
     def get_ph1(self):
         return self.ph1
 
-    def get_ph2(self):
-        return self.ph2
+    def get_who(self):
+        return self.who
 
 
 def sort_calls_list_a(calls_list: list):
