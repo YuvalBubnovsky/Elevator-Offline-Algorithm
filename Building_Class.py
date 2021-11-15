@@ -1,4 +1,5 @@
 import json
+import Elevator_Class
 
 
 class Building:
@@ -15,7 +16,7 @@ class Building:
                 object_data = json.load(data)
                 min_floor = object_data["_minFloor"]
                 max_floor = object_data["_maxFloor"]
-                elevators = [Elevator.construct(_elevator) for _elevator in object_data["_elevators"]]
+                elevators = [Elevator_Class.Elevator.construct(_elevator) for _elevator in object_data["_elevators"]]
             return cls(elevators, min_floor, max_floor)
         except FileExistsError as e:
             print(e)
