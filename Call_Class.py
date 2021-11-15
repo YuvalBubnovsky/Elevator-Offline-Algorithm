@@ -66,6 +66,21 @@ class Call:
         return "Elevator call" + "," + str(self.get_time()) + "," + str(self.get_src()) \
                + "," + str(self.get_dest()) + "," + str(self.status) + "," + str(self.who)
 
+    def is_on_route(self, call_to_check):
+        if self.get_direction() == call_to_check.get_direction() and is_middle(self.get_src(), self.get_dest(),
+                                                                               call_to_check.get_src()) and is_middle(
+                self.get_src(), self.get_dest(), call_to_check.get_dest()):
+            return True
+        return False
+
+
+def is_middle(start, end, x):  # Check and returns a boolean value if x is between start & end
+    if end >= x >= start:
+        return False
+    elif end <= x <= start:
+        return True
+    return False
+
 
 def sort_calls_list_a(calls_list: list):
     calls_list.sort(key=lambda x: x.time)
