@@ -21,6 +21,8 @@ def allocate(f_loc3: str, calls: list, elevators: list):
 
 
 
+
+
 def current_pos(ele: Elevator_Class.Elevator):
     pass
 

@@ -17,6 +17,7 @@ class Elevator:
         self.startTime = _startTime
         self.stopTime = _stopTime
         self.state = 0  # all elevators starts in level position
+        self.position = 0
 
     # Helper function to create the Elevator object while in the loop of reading the JSON file parameters
     @classmethod
@@ -47,6 +48,14 @@ class Elevator:
     def get_stop_time(self):
         return self.stopTime
 
+    """:return time to travel from src to dest"""
     def travel_time(self, Call: Call_Class):
         return float(self.get_close_time() + self.get_start_time() + (abs(Call.get_src() - Call.get_dest()) / (
             self.get_speed())) + self.get_stop_time() + self.get_open_time())
+
+    """@:return time to travel from a to b"""
+    def time_a_to_b(self, src_floor: int, dest_floor: int) -> float:
+        return float(self.get_close_time() + self.get_start_time() + (abs(src_floor - dest_floor) / (
+            self.get_speed())) + self.get_stop_time() + self.get_open_time())
+
+    def current_position(self) -> int:
