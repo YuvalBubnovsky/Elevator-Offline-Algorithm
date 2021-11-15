@@ -24,6 +24,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\data\Ex1_input\Ex1_Calls\Calls_b.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\results.csv">
           <value>
             <Attribute>
