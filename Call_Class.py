@@ -60,3 +60,6 @@ def sort_calls_list_a(calls_list: list):
 
 def sort_calls_list_d(calls_list: list):
     calls_list.sort(key=lambda x: x.time, reverse=True)
+
+
+
