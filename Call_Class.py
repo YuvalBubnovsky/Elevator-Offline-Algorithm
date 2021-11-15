@@ -21,7 +21,7 @@ class Call:
             self.direction = -1  # DOWN
 
     @classmethod
-    def init_data(self, f_loc2: str):
+    def init_data(cls, f_loc2: str):
         calls_list = []  # Create a list which will hold all the calls in the CSV files
         try:
             with open(f_loc2, "rt") as f:
@@ -29,7 +29,7 @@ class Call:
                 for each_call in calls:
                     call_vars = ",".join(each_call)
                     call = Call(call_vars[0], float(call_vars[1]), int(call_vars[2]), int(call_vars[3]),
-                                int(call_vars[4]), int(call_vars[5]))  # creating call
+                                int(call_vars[4]), int(call_vars[5]), 0)  # creating call
                     calls_list.append(call)
             return calls_list
         except FileExistsError as e:

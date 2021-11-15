@@ -1,3 +1,6 @@
+import Call_Class
+
+
 class Elevator:
 
     def __init__(self, _id: int, _speed: int, _minFloor: int, _maxFloor: int, _closeTime: float, _openTime: float,
@@ -39,3 +42,7 @@ class Elevator:
 
     def get_stop_time(self):
         return self.stopTime
+
+    def travel_time(self, Call: Call_Class):
+        return float(self.get_close_time() + self.get_start_time() + (abs(Call.get_src() - Call.get_dest()) / (
+            self.get_speed())) + self.get_stop_time() + self.get_open_time())
