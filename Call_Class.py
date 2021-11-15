@@ -5,20 +5,14 @@ class Call:
     calls_list = []
 
     # ph1/ph2 = placeholder
-    def __init__(self, _id: str, _time: float, _src: int, _dest: int, _ph1: int, _ph2: int
-                 , direction: int):
+    def __init__(self, _id: str, _time: float, _src: int, _dest: int, _ph1: int, _who: int):
 
         self.id = _id
         self.time = _time
         self.src = _src
         self.dest = _dest
         self.ph1 = _ph1
-        self.ph2 = _ph2
-        self.direction = 0
-        if self.src < self.dest:
-            self.direction = 1  # UP
-        else:
-            self.direction = -1  # DOWN
+        self.who = _who
 
     @classmethod
     def init_data(cls, f_loc2: str):
@@ -27,7 +21,7 @@ class Call:
             with open(f_loc2, "rt") as f:
                 calls = csv.reader(f)
                 for each_call in calls:
-                    call = Call(each_call[0], float(each_call[1]), int(each_call[2]), int(each_call[3]), int(each_call[4]), int(each_call[5]), 0)  # creating call
+                    call = Call(each_call[0], float(each_call[1]), int(each_call[2]), int(each_call[3]), int(each_call[4]), int(each_call[5]))  # creating call
                     calls_list.append(call)
             return calls_list
         except FileExistsError as e:
