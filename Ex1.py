@@ -17,12 +17,8 @@ def allocate(f_loc3: str, calls: list, elevators: list):
             call.who = 0
         write_csv(f_loc3, calls)
     else:
-        pass
 
 
-# else:
-#     for call in calls:
-#         pass
 
 
 def current_pos(ele: Elevator_Class.Elevator):

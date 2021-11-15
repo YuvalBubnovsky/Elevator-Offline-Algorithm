@@ -2,6 +2,9 @@ import Call_Class
 
 
 class Elevator:
+    UP = 1
+    DOWN = -1
+    LEVEL = 0
 
     def __init__(self, _id: int, _speed: int, _minFloor: int, _maxFloor: int, _closeTime: float, _openTime: float,
                  _startTime: float, _stopTime: float):
@@ -13,6 +16,7 @@ class Elevator:
         self.openTime = _openTime
         self.startTime = _startTime
         self.stopTime = _stopTime
+        self.state = 0  # all elevators starts in level position
 
     # Helper function to create the Elevator object while in the loop of reading the JSON file parameters
     @classmethod

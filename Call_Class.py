@@ -5,14 +5,16 @@ class Call:
     calls_list = []
 
     # ph1/ph2 = placeholder
-    def __init__(self, _id: str, _time: float, _src: int, _dest: int, _ph1: int, _who: int):
+    def __init__(self, _id: str, _time: float, _src: int, _dest: int, _ph1: int, _ph2: int
+                 , direction: int):
 
         self.id = _id
         self.time = _time
         self.src = _src
         self.dest = _dest
         self.ph1 = _ph1
-        self.who = _who
+        self.ph2 = _ph2
+        self.direction = 0
 
     @classmethod
     def init_data(cls, f_loc2: str):
