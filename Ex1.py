@@ -3,7 +3,7 @@ import Building_Class
 import Elevator_Class
 import Call_Class
 import csv
-import random
+import math
 
 
 def init():
@@ -21,31 +21,52 @@ def init():
                     down_calls += 1
     except FileExistsError as e:
         print(e)
-    allocate(sys.argv[3], call_list, building.elevators, up_calls, down_calls)
+    allocate("results.csv", call_list[0], building.elevators, up_calls, down_calls)
 
 
 def allocate(f_loc3: str, calls: list, elevators: list, up_total: int, down_total: int):
     if len(elevators) == 1:
         for call in calls:
             call.who = 0
-    if up_total > down_total:  # more up calls than down calls
-        elif len(elevators) % 2 == 0:  # in case number of elevators is even
-            for call in calls:
-                if call.src > call.dest:  # up call
-                    elevators = []
-                for i in range(0, int(len(elevators) / 2) + 1):
-                    elevators.append(i)
+        # if up_total > down_total:  # more up calls than down calls
+    elif len(elevators) % 2 == 0:  # in case number of elevators is even
+        for call in calls:
+            if call.src > call.dest:  # up call
+                elevators = []
+            for i in range(0, int(len(elevators) / 2) + 1):
+                elevators.append(elevators[i])
                 call.who = find_closest(call=call, elevators=elevators)
             else:
                 elevators = []
                 for i in range(int(len(elevators) / 2), int(len(elevators) + 1)):
-                    elevators.append(i)
+                    elevators.append(elevators[i])
                 call.who = find_closest(call=call, elevators=elevators)
     else:  # in case number of elevators is odd
-
+        if up_total > down_total:  # more up calls than down calls
+            for call in calls:
+                if call.src > call.dest:  # up call
+                    elevators = []
+                for i in range(0, math.ceil(int(len(elevators) / 2) + 1)):
+                    elevators.append(elevators[i])
+                    call.who = find_closest(call=call, elevators=elevators)
+                else:  # down call
+                    elevators = []
+                    for i in range(math.floor(int(len(elevators) / 2)), int(len(elevators) + 1)):
+                        elevators.append(elevators[i])
+                    call.who = find_closest(call=call, elevators=elevators)
+        else:  # more down calls then up calls
+            for call in calls:
+                if call.src > call.dest:  # up call
+                    elevators = []
+                for i in range(0, math.ceil(int(len(elevators) / 2) + 1)):
+                    elevators.append(elevators[i])
+                    call.who = find_closest(call=call, elevators=elevators)
+                else:  # down call
+                    elevators = []
+                    for i in range(math.floor(int(len(elevators) / 2)), int(len(elevators) + 1)):
+                        elevators.append(elevators[i])
+                    call.who = find_closest(call=call, elevators=elevators)
     write_csv(f_loc3, calls)
-
-else:
 
 
 """find the closest elevator for a call source"""
@@ -54,13 +75,12 @@ else:
 def find_closest(call: Call_Class.Call, elevators: list) -> int:
     closest: Elevator_Class.Elevator = elevators[0]
     for elevator in elevators:
-        if abs(elevator.currPos - call.src) < abs(closest.currPos - call.src):
+        if elevator.currPos == call.src:
+            return elevator.id  # in case elevator is in source position
+        elif abs(elevator.currPos - call.src) < abs(closest.currPos - call.src) | \
+                elevator.time_a_to_b(elevator.currPos, call.src) < closest.time_a_to_b(closest.currPos, call.src):
             closest = elevator.id
     return closest.id
-
-
-# def current_pos(ele: Elevator_Class.Elevator):
-#     pass
 
 
 def write_csv(file: str, calls: list):

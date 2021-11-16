@@ -4,7 +4,7 @@ import Elevator_Class
 
 class Building:
 
-    def __init__(self, elevators, _minFloor: int, _maxFloor: int):
+    def __init__(self, elevators: list, _minFloor: int, _maxFloor: int):
         self.minFloor = _minFloor
         self.maxFloor = _maxFloor
         self.elevators = elevators
