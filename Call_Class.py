@@ -28,8 +28,10 @@ class Call:
                     call = Call(each_call[0], float(each_call[1]), int(each_call[2]), int(each_call[3]),
                                 int(each_call[4]), int(each_call[5]))  # creating call
                     calls_list.append(call)
-                    if (each_call[2] < each_call[3]): up_calls_counter += 1
-                    else: down_calls_counter += 1
+                    if each_call[2] < each_call[3]:
+                        up_calls_counter += 1
+                    else:
+                        down_calls_counter += 1
             return calls_list, up_calls_counter, down_calls_counter
         except FileExistsError as e:
             print(e)
@@ -71,7 +73,7 @@ class Call:
     def is_on_route(self, call_to_check):
         if self.get_direction() == call_to_check.get_direction() and is_middle(self.get_src(), self.get_dest(),
                                                                                call_to_check.get_src()) and is_middle(
-                self.get_src(), self.get_dest(), call_to_check.get_dest()):
+            self.get_src(), self.get_dest(), call_to_check.get_dest()):
             return True
         return False
 

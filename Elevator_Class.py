@@ -70,7 +70,7 @@ class Elevator:
                + "," + str(self.startTime) + "," + str(self.stopTime) + "," + str(self.get_pos()) \
                + "," + str(self.currState)
 
-    """:return time to travel from src to dest"""
+    """@:return time to travel from src to dest"""
 
     def travel_time(self, Call: Call_Class):
         return float(self.get_close_time() + self.get_start_time() + (abs(Call.get_src() - Call.get_dest()) / (
