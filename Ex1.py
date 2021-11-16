@@ -3,6 +3,7 @@ import Building_Class
 import Elevator_Class
 import Call_Class
 import csv
+import random
 
 
 def init():
@@ -27,14 +28,35 @@ def allocate(f_loc3: str, calls: list, elevators: list, up_total: int, down_tota
     if len(elevators) == 1:
         for call in calls:
             call.who = 0
-        write_csv(f_loc3, calls)
-    elif len(elevators) % 2 == 0:
-        pass
-    else:
+    if up_total > down_total:  # more up calls than down calls
+        elif len(elevators) % 2 == 0:  # in case number of elevators is even
+            for call in calls:
+                if call.src > call.dest:  # up call
+                    elevators = []
+                for i in range(0, int(len(elevators) / 2) + 1):
+                    elevators.append(i)
+                call.who = find_closest(call=call, elevators=elevators)
+            else:
+                elevators = []
+                for i in range(int(len(elevators) / 2), int(len(elevators) + 1)):
+                    elevators.append(i)
+                call.who = find_closest(call=call, elevators=elevators)
+    else:  # in case number of elevators is odd
+
+    write_csv(f_loc3, calls)
+
+else:
 
 
-def scanCsv
-        pass
+"""find the closest elevator for a call source"""
+
+
+def find_closest(call: Call_Class.Call, elevators: list) -> int:
+    closest: Elevator_Class.Elevator = elevators[0]
+    for elevator in elevators:
+        if abs(elevator.currPos - call.src) < abs(closest.currPos - call.src):
+            closest = elevator.id
+    return closest.id
 
 
 # def current_pos(ele: Elevator_Class.Elevator):
