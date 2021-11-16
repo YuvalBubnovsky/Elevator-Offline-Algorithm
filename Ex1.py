@@ -19,6 +19,9 @@ def allocate(f_loc3: str, calls: list, elevators: list):
     else:
 
 
+def scanCsv
+
+
 
 
 

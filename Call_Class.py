@@ -3,6 +3,8 @@ import csv
 
 class Call:
     calls_list = []
+    up_calls = 0
+    down_calls = 0
 
     # status : INIT=0, GOING2SRC=1, GOING2DEST=2, DONE=3;
     def __init__(self, _id: str, _time: float, _src: int, _dest: int, _status: int, _who: int):
@@ -13,14 +15,12 @@ class Call:
         self.dest = _dest
         self.status = _status
         self.who = _who
-        if self.src - self.dest < 0:
-            self.direction = 1
-        else:
-            self.direction = -1
 
     @classmethod
     def init_data(cls, f_loc2: str):
         calls_list = []  # Create a list which will hold all the calls in the CSV files
+        up_calls_counter = 0
+        down_calls_counter = 0
         try:
             with open(f_loc2, "rt") as f:
                 calls = csv.reader(f)
@@ -28,7 +28,9 @@ class Call:
                     call = Call(each_call[0], float(each_call[1]), int(each_call[2]), int(each_call[3]),
                                 int(each_call[4]), int(each_call[5]))  # creating call
                     calls_list.append(call)
-            return calls_list
+                    if (each_call[2] < each_call[3]): up_calls_counter += 1
+                    else: down_calls_counter += 1
+            return calls_list, up_calls_counter, down_calls_counter
         except FileExistsError as e:
             print(e)
 
