@@ -5,8 +5,10 @@ import Call_Class
 import csv
 import math
 
-""" """
+"""written by Yuval Bubonvsky and Itamar Kraitman"""
+
 def init():
+    """ initializing the arguments needed to run the program"""
     up_calls = 0
     down_calls = 0
     building = Building_Class.Building.init_data(sys.argv[1])
@@ -25,8 +27,13 @@ def init():
 
 
 def allocate(f_loc3: str, calls: list, elevators: list, up_total: int, down_total: int):
-    print("up ", up_total, "down ", down_total)
-    print(len(elevators))
+    """ allocating elevator for each call
+        :param f_loc3: name of csv file to write to
+        :param calls: list of calls
+        :param elevators: list of elevators
+        :param up_total: how many up calls are in total
+        :param down_total: how many down calls are in total
+    """
     ele_list = []  # list of elevators
     if len(elevators) == 1:
         for call in calls:
@@ -66,10 +73,12 @@ def allocate(f_loc3: str, calls: list, elevators: list, up_total: int, down_tota
     write_csv(f_loc3, calls)
 
 
-"""find the closest elevator for a call source"""
-
-
 def find_closest(call: Call_Class.Call, elevators: list) -> int:
+    """finding the closest elevator for a call source with respect to current position and time
+        :param call: call to allocate elevator to
+        :param elevators: list of elevators
+        :return id of closest elevators
+    """
     closest: Elevator_Class.Elevator = elevators[0]
     for elevator in elevators:
         if elevator.currPos == call.src:
@@ -81,6 +90,10 @@ def find_closest(call: Call_Class.Call, elevators: list) -> int:
 
 
 def write_csv(file: str, calls: list):
+    """writing csv file of calls from calls list
+        :param file: name of the file to write to
+        :param calls: list of calls
+    """
     try:
         for i in range(len(calls)):
             calls[i] = calls[i].__dict__.values()

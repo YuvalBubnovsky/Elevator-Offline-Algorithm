@@ -5,6 +5,16 @@ class Elevator:
 
     def __init__(self, _id: int, _speed: int, _minFloor: int, _maxFloor: int, _closeTime: float, _openTime: float,
                  _startTime: float, _stopTime: float):
+        """constructor
+            :param _id: id of elevator
+            :param _speed: speed of elevator (floor per second)
+            :param _startTime: acceleration time
+            :param _stopTime: slowing down time
+            :param _maxFloor: the highest floor which the elevator can reach
+            :param _minFloor: the lowest floor which the elevator can reach
+            :param _closeTime: time takes the doors to close
+            :param _openTime: time takes the doors to open
+        """
         self.id = _id
         self.speed = _speed
         self.minFloor = _minFloor
@@ -20,8 +30,10 @@ class Elevator:
     # Helper function to create the Elevator object while in the loop of reading the JSON file parameters
     @classmethod
     def construct(cls, data):
+        """construct the elevator with all its attributes"""
         return cls(**data)
 
+    """get and set method of each attribute of elevator"""
     def get_id(self):
         return self.id
 
@@ -55,8 +67,8 @@ class Elevator:
     def get_state(self):
         return self.currState
 
-    def get_penalty_time(self):
-        return self.startTime + self.stopTime + self.openTime + self.closeTime
+    # def get_penalty_time(self):
+    #     return self.startTime + self.stopTime + self.openTime + self.closeTime
 
     def set_time(self, time):
         self.currTime = time
@@ -65,19 +77,28 @@ class Elevator:
         return self.currTime
 
     def __str__(self):
+        """:return return string which represent the elevator"""
         return "" + str(self.id) + "," + str(self.speed) + "," + str(self.minFloor) + "," \
                + str(self.maxFloor) + "," + str(self.closeTime) + "," + str(self.openTime) \
                + "," + str(self.startTime) + "," + str(self.stopTime) + "," + str(self.get_pos()) \
                + "," + str(self.currState)
 
-    """@:return time to travel from src to dest"""
+    def travel_time(self, Call: Call_Class) -> float:
+        """ compute the time that takes the elevator to travel from source to destination
 
-    def travel_time(self, Call: Call_Class):
+        :param Call:
+        :return: float
+        """
         return float(self.get_close_time() + self.get_start_time() + (abs(Call.get_src() - Call.get_dest()) / (
             self.get_speed())) + self.get_stop_time() + self.get_open_time())
 
-    """@:return time to travel from a to b"""
 
     def time_a_to_b(self, src_floor: int, dest_floor: int) -> float:
+        """ compute the time that takes the elevator to travel from a to b
+
+        :param src_floor:
+        :param dest_floor:
+        :return:
+        """
         return float(self.get_close_time() + self.get_start_time() + (abs(src_floor - dest_floor) / (
             self.get_speed())) + self.get_stop_time() + self.get_open_time())
