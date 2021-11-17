@@ -27,7 +27,6 @@ class Elevator:
         self.currPos = 0
         self.currTime = 0.0
 
-    # Helper function to create the Elevator object while in the loop of reading the JSON file parameters
     @classmethod
     def construct(cls, data):
         """construct the elevator with all its attributes"""
