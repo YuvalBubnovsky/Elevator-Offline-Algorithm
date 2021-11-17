@@ -5,7 +5,7 @@ import Call_Class
 import csv
 import math
 
-
+""" """
 def init():
     up_calls = 0
     down_calls = 0
@@ -25,7 +25,8 @@ def init():
 
 
 def allocate(f_loc3: str, calls: list, elevators: list, up_total: int, down_total: int):
-    print("up ",up_total, "down ",down_total)
+    print("up ", up_total, "down ", down_total)
+    print(len(elevators))
     ele_list = []  # list of elevators
     if len(elevators) == 1:
         for call in calls:
@@ -45,23 +46,21 @@ def allocate(f_loc3: str, calls: list, elevators: list, up_total: int, down_tota
         if up_total > down_total:  # more up calls than down calls
             for call in calls:
                 if call.src > call.dest:  # up call
-                    for i in range(0, math.ceil(int(len(elevators) / 2) + 1)):
-                        elevators.append(elevators[i])
+                    for i in range(0, math.floor(len(elevators) / 2) + 1):
+                        ele_list.append(elevators[i])
                     call.who = find_closest(call=call, elevators=ele_list)
                 else:  # down call
-                    elevators = []
-                    for i in range(math.floor(int(len(elevators) / 2)), int(len(elevators) + 1)):
-                        elevators.append(elevators[i])
+                    for i in range(int(len(elevators) / 2) + 1, int(len(elevators))):
+                        ele_list.append(elevators[i])
                     call.who = find_closest(call=call, elevators=ele_list)
         else:  # more down calls then up calls
             for call in calls:
                 if call.src > call.dest:  # up call
-                    for i in range(0, math.ceil(int(len(elevators) / 2) + 1)):
-                        elevators.append(elevators[i])
+                    for i in range(0, math.floor(int(len(elevators) / 2) + 1)):
+                        ele_list.append(elevators[i])
                         call.who = find_closest(call=call, elevators=ele_list)
                     else:  # down call
-                        elevators = []
-                        for i in range(math.floor(int(len(elevators) / 2)), int(len(elevators) + 1)):
+                        for i in range(int(len(elevators) / 2) + 1, int(len(elevators))):
                             elevators.append(elevators[i])
                         call.who = find_closest(call=call, elevators=ele_list)
     write_csv(f_loc3, calls)
