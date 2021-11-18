@@ -1,0 +1,72 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Ex1{
+Building : object
+init()
+allocate()
+find_closest()
+find_fastest_elevator()
+write_csv()
+}
+class Building{
+name
+min_floor
+max_floor
+elevators : list
+init_data()
+get_name()
+get_min_floor()
+get_max_floor()
+get_elevators()
+}
+class Elevator{
+id
+speed
+min_floor
+max_floor
+close_time
+open_time
+start_time
+stop_time
+curr_state
+curr_pos
+
+get_id()
+get_speed()
+get_min_floor()
+get_max_floor()
+get_close_time()
+get_open_time()
+get_start_time()
+get_stop_time()
+get_pos()
+get_state()
+travel_time()
+time_a_to_b()
+}
+class Call{
+id
+time
+source
+destination
+status
+who_is_allocated
+init_data()
+get_id()
+get_time()
+get_src()
+get_dest()
+set_who()
+get_who()
+}
+
+Ex1 <- Building
+Ex1 <- Elevator
+Ex1 - Call
+Elevator -> Building
+Elevator <-- Call
+
+
+
+@enduml

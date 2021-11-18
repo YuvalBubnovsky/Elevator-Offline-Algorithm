@@ -33,6 +33,7 @@ class Elevator:
         return cls(**data)
 
     """get and set method of each attribute of elevator"""
+
     def get_id(self):
         return self.id
 
@@ -90,7 +91,6 @@ class Elevator:
         """
         return float(self.get_close_time() + self.get_start_time() + (abs(Call.get_src() - Call.get_dest()) / (
             self.get_speed())) + self.get_stop_time() + self.get_open_time())
-
 
     def time_a_to_b(self, src_floor: int, dest_floor: int) -> float:
         """ compute the time that takes the elevator to travel from a to b
