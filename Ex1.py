@@ -66,7 +66,7 @@ def allocate(f_loc3: str, calls: list, elevators: list, up_total: int, down_tota
         else:  # more down calls then up calls
             for call in calls:
                 if call.src > call.dest:  # up call
-                    for i in range(0, len(elevators, 2)):
+                    for i in range(0, len(elevators), 2):
                         ele_list.append(elevators[i])
                         call.who = find_closest(call=call, elevators=ele_list)
                     else:  # down call
