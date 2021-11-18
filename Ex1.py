@@ -7,6 +7,7 @@ import math
 
 """written by Yuval Bubonvsky and Itamar Kraitman"""
 
+
 def init():
     """ initializing the arguments needed to run the program"""
     up_calls = 0
@@ -35,6 +36,7 @@ def allocate(f_loc3: str, calls: list, elevators: list, up_total: int, down_tota
         :param down_total: how many down calls are in total
     """
     ele_list = []  # list of elevators
+    sorted_by_speed = find_fastest_elevator(elevators)
     if len(elevators) == 1:
         for call in calls:
             call.who = 0
@@ -42,32 +44,33 @@ def allocate(f_loc3: str, calls: list, elevators: list, up_total: int, down_tota
     elif len(elevators) % 2 == 0:  # in case number of elevators is even
         for call in calls:
             if call.src > call.dest:  # up call
-                for i in range(0, int(len(elevators) / 2)):
+                for i in range(0, int(len(elevators) / 2) + 1, 2):
                     ele_list.append(elevators[i])
                 call.who = find_closest(call=call, elevators=ele_list)
             else:
-                for i in range(int(len(elevators) / 2), int(len(elevators))):
+                # for i in range(int(len(elevators) / 2), int(len(elevators))):
+                for i in range(1, len(elevators), 2):
                     ele_list.append(elevators[i])
                 call.who = find_closest(call=call, elevators=ele_list)
     else:  # in case number of elevators is odd
         if up_total > down_total:  # more up calls than down calls
             for call in calls:
                 if call.src > call.dest:  # up call
-                    for i in range(0, math.floor(len(elevators) / 2) + 1):
+                    for i in range(0, len(elevators), 2):
                         ele_list.append(elevators[i])
                     call.who = find_closest(call=call, elevators=ele_list)
                 else:  # down call
-                    for i in range(int(len(elevators) / 2) + 1, int(len(elevators))):
+                    for i in range(1, int(len(elevators)), 2):
                         ele_list.append(elevators[i])
                     call.who = find_closest(call=call, elevators=ele_list)
         else:  # more down calls then up calls
             for call in calls:
                 if call.src > call.dest:  # up call
-                    for i in range(0, math.floor(int(len(elevators) / 2) + 1)):
+                    for i in range(0, len(elevators, 2)):
                         ele_list.append(elevators[i])
                         call.who = find_closest(call=call, elevators=ele_list)
                     else:  # down call
-                        for i in range(int(len(elevators) / 2) + 1, int(len(elevators))):
+                        for i in range(1, int(len(elevators)), 2):
                             elevators.append(elevators[i])
                         call.who = find_closest(call=call, elevators=ele_list)
     write_csv(f_loc3, calls)
@@ -87,6 +90,17 @@ def find_closest(call: Call_Class.Call, elevators: list) -> int:
                 (elevator.time_a_to_b(elevator.currPos, call.src) < closest.time_a_to_b(closest.currPos, call.src)):
             closest = elevator
     return closest.id
+
+
+def find_fastest_elevator(elevators: list):
+    """finding the fastest elevator in a list of elevators
+
+    :param elevators: list of elevators (Elevator_class's instances)
+    :return: list of elevators, sorted in descending order by speed
+    """
+    fastest_elevators = elevators
+    fastest_elevators.sort(reverse=True, key=lambda ele: ele.speed)
+    return fastest_elevators
 
 
 def write_csv(file: str, calls: list):

@@ -27,7 +27,7 @@ class Call:
     @classmethod
     def init_data(cls, f_loc2: str) -> [list, int, int]:
         """loading data form csv file, creating from each row instance of Call and appending it to calls_list and
-            initilizeing up_calls and down_calls
+            initializing up_calls and down_calls
             :param f_loc2: name of the csv file
             :return list of calls, counters of two types of calls
         """
@@ -50,6 +50,7 @@ class Call:
             print(e)
 
     """get methods for each attribute of call"""
+
     def get_id(self):
         return self.id
 
@@ -88,7 +89,6 @@ class Call:
     #             is_middle(self.get_src(), self.get_dest(), call_to_check.get_dest()):
     #         return True
     #     return False
-
 
 # def is_middle(start, end, x):  # Check and returns a boolean value if x is between start & end
 #     if end >= x >= start:
