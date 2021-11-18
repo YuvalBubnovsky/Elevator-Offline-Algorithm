@@ -1,0 +1,42 @@
+Index: Elevator_Class.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import Call_Class\r\n\r\n\r\nclass Elevator:\r\n\r\n    def __init__(self, _id: int, _speed: int, _minFloor: int, _maxFloor: int, _closeTime: float, _openTime: float,\r\n                 _startTime: float, _stopTime: float):\r\n        self.id = _id\r\n        self.speed = _speed\r\n        self.minFloor = _minFloor\r\n        self.maxFloor = _maxFloor\r\n        self.closeTime = _closeTime\r\n        self.openTime = _openTime\r\n        self.startTime = _startTime\r\n        self.stopTime = _stopTime\r\n\r\n    # Helper function to create the Elevator object while in the loop of reading the JSON file parameters\r\n    @classmethod\r\n    def construct(cls, data):\r\n        return cls(**data)\r\n\r\n    def get_id(self):\r\n        return self.id\r\n\r\n    def get_speed(self):\r\n        return self.speed\r\n\r\n    def get_min_floor(self):\r\n        return self.minFloor\r\n\r\n    def get_max_floor(self):\r\n        return self.maxFloor\r\n\r\n    def get_close_time(self):\r\n        return self.closeTime\r\n\r\n    def get_open_time(self):\r\n        return self.openTime\r\n\r\n    def get_start_time(self):\r\n        return self.startTime\r\n\r\n    def get_stop_time(self):\r\n        return self.stopTime\r\n\r\n    def travel_time(self, Call: Call_Class):\r\n        return float(self.get_close_time() + self.get_start_time() + (abs(Call.get_src() - Call.get_dest()) / (\r\n            self.get_speed())) + self.get_stop_time() + self.get_open_time())\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Elevator_Class.py b/Elevator_Class.py
+--- a/Elevator_Class.py	(revision 3106779ee0d26e0f54fa153137022cc95ad94876)
++++ b/Elevator_Class.py	(date 1636993433368)
+@@ -14,6 +14,7 @@
+         self.startTime = _startTime
+         self.stopTime = _stopTime
+ 
++
+     # Helper function to create the Elevator object while in the loop of reading the JSON file parameters
+     @classmethod
+     def construct(cls, data):
+Index: .idea/csv-plugin.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"CsvFileAttributes\">\r\n    <option name=\"attributeMap\">\r\n      <map>\r\n        <entry key=\"\\allocations.csv\">\r\n          <value>\r\n            <Attribute>\r\n              <option name=\"separator\" value=\",\" />\r\n            </Attribute>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"\\data\\Ex1_Calls_case_2_.csv\">\r\n          <value>\r\n            <Attribute>\r\n              <option name=\"separator\" value=\",\" />\r\n            </Attribute>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"\\data\\Ex1_input\\Ex1_Calls\\Calls_a.csv\">\r\n          <value>\r\n            <Attribute>\r\n              <option name=\"separator\" value=\",\" />\r\n            </Attribute>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"\\results.csv\">\r\n          <value>\r\n            <Attribute>\r\n              <option name=\"separator\" value=\",\" />\r\n            </Attribute>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/csv-plugin.xml b/.idea/csv-plugin.xml
+--- a/.idea/csv-plugin.xml	(revision 3106779ee0d26e0f54fa153137022cc95ad94876)
++++ b/.idea/csv-plugin.xml	(date 1636988676532)
+@@ -24,6 +24,13 @@
+             </Attribute>
+           </value>
+         </entry>
++        <entry key="\data\Ex1_input\Ex1_Calls\Calls_b.csv">
++          <value>
++            <Attribute>
++              <option name="separator" value="," />
++            </Attribute>
++          </value>
++        </entry>
+         <entry key="\results.csv">
+           <value>
+             <Attribute>

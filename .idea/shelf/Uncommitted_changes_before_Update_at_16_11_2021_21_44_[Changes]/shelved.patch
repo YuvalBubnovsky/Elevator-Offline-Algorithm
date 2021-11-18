@@ -1,0 +1,22 @@
+Index: Ex1.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import sys\r\nimport Building_Class\r\nimport Elevator_Class\r\nimport Call_Class\r\nimport csv\r\n\r\n\r\ndef init():\r\n    up_calls = 0\r\n    down_calls = 0\r\n    building = Building_Class.Building.init_data(sys.argv[1])\r\n    call_list = Call_Class.Call.init_data(sys.argv[2])\r\n    try:\r\n        with open(sys.argv[2], \"rt\") as f:\r\n            calls = csv.reader(f)\r\n            for call in calls:\r\n                if call[2] < call[3]:\r\n                    up_calls += 1\r\n                else:\r\n                    down_calls += 1\r\n    except FileExistsError as e:\r\n        print(e)\r\n    allocate(sys.argv[3], call_list, building.elevators, up_calls, down_calls)\r\n\r\n\r\ndef allocate(f_loc3: str, calls: list, elevators: list, up_total: int, down_total: int):\r\n    if len(elevators) == 1:\r\n        for call in calls:\r\n            call.who = 0\r\n        write_csv(f_loc3, calls)\r\n    elif len(elevators) % 2 == 0:\r\n        pass\r\n    else:\r\n\r\n\r\ndef scanCsv\r\n        pass\r\n\r\n\r\n# def current_pos(ele: Elevator_Class.Elevator):\r\n#     pass\r\n\r\n\r\ndef write_csv(file: str, calls: list):\r\n    try:\r\n        for i in range(len(calls)):\r\n            calls[i] = calls[i].__dict__.values()\r\n        with open(file, 'w', newline='') as results:\r\n            writer = csv.writer(results)\r\n            writer.writerows(calls)\r\n    except Exception as e:\r\n        print(e)\r\n        print(\"error has occurred\")\r\n\r\n\r\nif __name__ == \"__main__\":\r\n    init()\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Ex1.py b/Ex1.py
+--- a/Ex1.py	
++++ b/Ex1.py	
+@@ -29,6 +29,11 @@
+             call.who = 0
+         write_csv(f_loc3, calls)
+     elif len(elevators) % 2 == 0:
++        if up_total > down_total:
++            ratio = up_total / down_total
++
++        else:
++            ratio = down_total / up_total
+         pass
+     else:
+ 

@@ -1,0 +1,119 @@
+Index: Call_Class.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import csv\r\n\r\n\r\nclass Call:\r\n    calls_list = []\r\n\r\n    # status : INIT=0, GOING2SRC=1, GOING2DEST=2, DONE=3;\r\n    def __init__(self, _id: str, _time: float, _src: int, _dest: int, _status: int, _who: int):\r\n\r\n        self.id = _id\r\n        self.time = _time\r\n        self.src = _src\r\n        self.dest = _dest\r\n        self.status = _status\r\n        self.who = _who\r\n        if self.src - self.dest < 0:\r\n            self.direction = 1\r\n        else:\r\n            self.direction = -1\r\n\r\n    @classmethod\r\n    def init_data(cls, f_loc2: str):\r\n        calls_list = []  # Create a list which will hold all the calls in the CSV files\r\n        try:\r\n            with open(f_loc2, \"rt\") as f:\r\n                calls = csv.reader(f)\r\n                for each_call in calls:\r\n                    call = Call(each_call[0], float(each_call[1]), int(each_call[2]), int(each_call[3]),\r\n                                int(each_call[4]), int(each_call[5]))  # creating call\r\n                    calls_list.append(call)\r\n            return calls_list\r\n        except FileExistsError as e:\r\n            print(e)\r\n\r\n    def get_id(self):\r\n        return self.id\r\n\r\n    def get_time(self):\r\n        return self.time\r\n\r\n    def get_src(self):\r\n        return self.src\r\n\r\n    def get_dest(self):\r\n        return self.dest\r\n\r\n    def set_status(self, n_status: int):\r\n        if 0 <= n_status <= 3:\r\n            self.status = n_status\r\n        else:\r\n            print(\"Invalid status! Input a number between 0 and 3\")\r\n\r\n    def get_status(self):\r\n        return self.status\r\n\r\n    def get_direction(self):\r\n        return self.direction\r\n\r\n    def set_who(self, elevator):\r\n        self.who = elevator\r\n\r\n    def get_who(self):\r\n        return self.who\r\n\r\n    def __str__(self):\r\n        return \"Elevator call\" + \",\" + str(self.get_time()) + \",\" + str(self.get_src()) \\\r\n               + \",\" + str(self.get_dest()) + \",\" + str(self.status) + \",\" + str(self.who)\r\n\r\n    def is_on_route(self, call_to_check):\r\n        if self.get_direction() == call_to_check.get_direction() and is_middle(self.get_src(), self.get_dest(),\r\n                                                                               call_to_check.get_src()) and is_middle(\r\n                self.get_src(), self.get_dest(), call_to_check.get_dest()):\r\n            return True\r\n        return False\r\n\r\n\r\ndef is_middle(start, end, x):  # Check and returns a boolean value if x is between start & end\r\n    if end >= x >= start:\r\n        return False\r\n    elif end <= x <= start:\r\n        return True\r\n    return False\r\n\r\n\r\ndef sort_calls_list_a(calls_list: list):\r\n    calls_list.sort(key=lambda x: x.time)\r\n\r\n\r\ndef sort_calls_list_d(calls_list: list):\r\n    calls_list.sort(key=lambda x: x.time, reverse=True)\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Call_Class.py b/Call_Class.py
+--- a/Call_Class.py	(revision 14553859c4ed66877b36aae63aca4b76dcc7ab00)
++++ b/Call_Class.py	(date 1637075548936)
+@@ -3,6 +3,8 @@
+ 
+ class Call:
+     calls_list = []
++    up_calls = 0
++    down_calls = 0
+ 
+     # status : INIT=0, GOING2SRC=1, GOING2DEST=2, DONE=3;
+     def __init__(self, _id: str, _time: float, _src: int, _dest: int, _status: int, _who: int):
+@@ -32,6 +34,7 @@
+         except FileExistsError as e:
+             print(e)
+ 
++
+     def get_id(self):
+         return self.id
+ 
+Index: Ex1.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import sys\r\nimport Building_Class\r\nimport Elevator_Class\r\nimport Call_Class\r\nimport csv\r\n\r\n\r\ndef init():\r\n    building = Building_Class.Building.init_data(sys.argv[1])\r\n    call_list = Call_Class.Call.init_data(sys.argv[2])\r\n    allocate(sys.argv[3], call_list, building.elevators)\r\n\r\n\r\ndef allocate(f_loc3: str, calls: list, elevators: list):\r\n    if len(elevators) == 1:\r\n        for call in calls:\r\n            call.who = 0\r\n        write_csv(f_loc3, calls)\r\n    else:\r\n\r\n\r\n\r\n\r\n\r\n\r\ndef current_pos(ele: Elevator_Class.Elevator):\r\n    pass\r\n\r\n\r\ndef write_csv(file: str, calls: list):\r\n    try:\r\n        for i in range(len(calls)):\r\n            calls[i] = calls[i].__dict__.values()\r\n        with open(file, 'w', newline='') as results:\r\n            writer = csv.writer(results)\r\n            writer.writerows(calls)\r\n    except Exception as e:\r\n        print(e)\r\n        print(\"error has occurred\")\r\n\r\n\r\nif __name__ == \"__main__\":\r\n    init()\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Ex1.py b/Ex1.py
+--- a/Ex1.py	(revision 14553859c4ed66877b36aae63aca4b76dcc7ab00)
++++ b/Ex1.py	(date 1637075028227)
+@@ -16,17 +16,16 @@
+         for call in calls:
+             call.who = 0
+         write_csv(f_loc3, calls)
++    elif len(elevators) % 2 == 0:
++        pass
+     else:
+-
+-
+-
+-
+-
+-
+-def current_pos(ele: Elevator_Class.Elevator):
+-    pass
++        pass
+ 
+ 
++# def current_pos(ele: Elevator_Class.Elevator):
++#     pass
++
++
+ def write_csv(file: str, calls: list):
+     try:
+         for i in range(len(calls)):
+Index: Elevator_Class.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import Call_Class\r\n\r\n\r\nclass Elevator:\r\n\r\n    def __init__(self, _id: int, _speed: int, _minFloor: int, _maxFloor: int, _closeTime: float, _openTime: float,\r\n                 _startTime: float, _stopTime: float):\r\n        self.id = _id\r\n        self.speed = _speed\r\n        self.minFloor = _minFloor\r\n        self.maxFloor = _maxFloor\r\n        self.closeTime = _closeTime\r\n        self.openTime = _openTime\r\n        self.startTime = _startTime\r\n        self.stopTime = _stopTime\r\n        self.currState = 0  # all elevators starts in level position\r\n        self.currPos = 0\r\n        self.currTime = 0.0\r\n\r\n    # Helper function to create the Elevator object while in the loop of reading the JSON file parameters\r\n    @classmethod\r\n    def construct(cls, data):\r\n        return cls(**data)\r\n\r\n    def get_id(self):\r\n        return self.id\r\n\r\n    def get_speed(self):\r\n        return self.speed\r\n\r\n    def get_min_floor(self):\r\n        return self.minFloor\r\n\r\n    def get_max_floor(self):\r\n        return self.maxFloor\r\n\r\n    def get_close_time(self):\r\n        return self.closeTime\r\n\r\n    def get_open_time(self):\r\n        return self.openTime\r\n\r\n    def get_start_time(self):\r\n        return self.startTime\r\n\r\n    def get_stop_time(self):\r\n        return self.stopTime\r\n\r\n    def set_pos(self, floor):\r\n        self.currPos = floor\r\n\r\n    def get_pos(self):\r\n        return self.currPos\r\n\r\n    def get_state(self):\r\n        return self.currState\r\n\r\n    def get_penalty_time(self):\r\n        return self.startTime + self.stopTime + self.openTime + self.closeTime\r\n\r\n    def set_time(self, time):\r\n        self.currTime = time\r\n\r\n    def get_time(self):\r\n        return self.currTime\r\n\r\n    def __str__(self):\r\n        return \"\" + str(self.id) + \",\" + str(self.speed) + \",\" + str(self.minFloor) + \",\" \\\r\n               + str(self.maxFloor) + \",\" + str(self.closeTime) + \",\" + str(self.openTime) \\\r\n               + \",\" + str(self.startTime) + \",\" + str(self.stopTime) + \",\" + str(self.get_pos()) \\\r\n               + \",\" + str(self.currState)\r\n\r\n    \"\"\":return time to travel from src to dest\"\"\"\r\n\r\n    def travel_time(self, Call: Call_Class):\r\n        return float(self.get_close_time() + self.get_start_time() + (abs(Call.get_src() - Call.get_dest()) / (\r\n            self.get_speed())) + self.get_stop_time() + self.get_open_time())\r\n\r\n    \"\"\"@:return time to travel from a to b\"\"\"\r\n\r\n    def time_a_to_b(self, src_floor: int, dest_floor: int) -> float:\r\n        return float(self.get_close_time() + self.get_start_time() + (abs(src_floor - dest_floor) / (\r\n            self.get_speed())) + self.get_stop_time() + self.get_open_time())\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Elevator_Class.py b/Elevator_Class.py
+--- a/Elevator_Class.py	(revision 14553859c4ed66877b36aae63aca4b76dcc7ab00)
++++ b/Elevator_Class.py	(date 1636997628220)
+@@ -70,7 +70,7 @@
+                + "," + str(self.startTime) + "," + str(self.stopTime) + "," + str(self.get_pos()) \
+                + "," + str(self.currState)
+ 
+-    """:return time to travel from src to dest"""
++    """@:return time to travel from src to dest"""
+ 
+     def travel_time(self, Call: Call_Class):
+         return float(self.get_close_time() + self.get_start_time() + (abs(Call.get_src() - Call.get_dest()) / (
+Index: .idea/csv-plugin.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"CsvFileAttributes\">\r\n    <option name=\"attributeMap\">\r\n      <map>\r\n        <entry key=\"\\allocations.csv\">\r\n          <value>\r\n            <Attribute>\r\n              <option name=\"separator\" value=\",\" />\r\n            </Attribute>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"\\data\\Ex1_Calls_case_2_.csv\">\r\n          <value>\r\n            <Attribute>\r\n              <option name=\"separator\" value=\",\" />\r\n            </Attribute>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"\\data\\Ex1_input\\Ex1_Calls\\Calls_a.csv\">\r\n          <value>\r\n            <Attribute>\r\n              <option name=\"separator\" value=\",\" />\r\n            </Attribute>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"\\data\\Ex1_input\\Ex1_Calls\\Calls_b.csv\">\r\n          <value>\r\n            <Attribute>\r\n              <option name=\"separator\" value=\",\" />\r\n            </Attribute>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"\\results.csv\">\r\n          <value>\r\n            <Attribute>\r\n              <option name=\"separator\" value=\",\" />\r\n            </Attribute>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/csv-plugin.xml b/.idea/csv-plugin.xml
+--- a/.idea/csv-plugin.xml	(revision 14553859c4ed66877b36aae63aca4b76dcc7ab00)
++++ b/.idea/csv-plugin.xml	(date 1637073885041)
+@@ -3,13 +3,6 @@
+   <component name="CsvFileAttributes">
+     <option name="attributeMap">
+       <map>
+-        <entry key="\allocations.csv">
+-          <value>
+-            <Attribute>
+-              <option name="separator" value="," />
+-            </Attribute>
+-          </value>
+-        </entry>
+         <entry key="\data\Ex1_Calls_case_2_.csv">
+           <value>
+             <Attribute>
+@@ -25,13 +18,6 @@
+           </value>
+         </entry>
+         <entry key="\data\Ex1_input\Ex1_Calls\Calls_b.csv">
+-          <value>
+-            <Attribute>
+-              <option name="separator" value="," />
+-            </Attribute>
+-          </value>
+-        </entry>
+-        <entry key="\results.csv">
+           <value>
+             <Attribute>
+               <option name="separator" value="," />
